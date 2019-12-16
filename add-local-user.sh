@@ -6,6 +6,12 @@
 # with their usernames, passwords, and hostname in CSV format to STDOUT. Optionally, 
 # user can specify output file.
 
+# NOTE: This scripts was tested on CentOS. Ubuntu doesn't support --stdin option for passwd
+#	Required change for Ubuntu
+# 	
+#	FROM: 	echo "${PASSWORD}" | passwd --stdin "${USERNAME}" &> /dev/null
+# 	TO: 	echo "${PASSWORD}" | chpasswd "${USERNAME}" &> /dev/null
+
 # Default password length is 48
 LENGTH=48
 
