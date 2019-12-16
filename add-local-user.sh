@@ -76,6 +76,34 @@ if [[ "${#}" -eq 0 ]]; then
 	usage
 fi
 
+# Check for already existing users on the system. Print list
+# of already existing users, terminate script, and ask user to 
+# provide only usernames that don't already exist.
+
+USERS_THAT_EXIST=""
+SHOULD_TERMINATE='false'
+
+for USERNAME in "${@}"; do 	
+	id "${USERNAME}" &> /dev/null
+	
+	if [[ "${?}" -eq 0 ]]; then
+		SHOULD_TERMINATE='true'
+		if [[ "${USERS_THAT_EXIST}" = '' ]]; then
+			USERS_THAT_EXIST="${USERNAME}"
+		else
+			USERS_THAT_EXIST="${USERS_THAT_EXIST}, ${USERNAME}"
+		fi
+	fi	
+done
+
+if [[ "${SHOULD_TERMINATE}" = 'true' ]]; then
+	echo "Please supply only usernames that don't already exist." >&2
+	echo "These users already exist:" >&2
+	echo >&2
+	echo "${USERS_THAT_EXIST}" >&2
+	exit 1
+fi
+
 # Print out CSV header.
 if [[ "${USE_OUTPUT_FILE}" = 'true' ]]; then
 	echo "Username,Password,Hostname" > "${OUTPUT_FILE}"
