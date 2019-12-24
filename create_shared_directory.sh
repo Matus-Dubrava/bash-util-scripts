@@ -60,10 +60,7 @@ check_return_code "ERROR: Failed to create group ${GROUP}"
 mkdir -p "${DIR}" 
 check_return_code "ERROR: Failed to create ${DIR}"
 
-chmod 1775 "${DIR}"
-check_return_code "ERROR: Failed to set permissions ${DIR}"
-
-chmod g+s "${DIR}"
+chmod 3775 "${DIR}"
 check_return_code "ERROR: Failed to set permissions ${DIR}"
 
 chown ."${GROUP}" "${DIR}"
