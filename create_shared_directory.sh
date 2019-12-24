@@ -53,7 +53,7 @@ if [[ -d "${DIR}" ]]; then
 fi
 
 # Create specified group.
-groupadd "${GROUP}"
+groupadd "${GROUP}" &> /dev/null
 check_return_code "ERROR: Failed to create group ${GROUP}"
 
 # Set correct permissions and ownership.
